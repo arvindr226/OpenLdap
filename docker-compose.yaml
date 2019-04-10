@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+   openldap:
+     image: dinkel/openldap
+     volumes:
+       - db_data:/var/lib/ldap
+     restart: always
+     environment:
+       SLAPD_PASSWORD: password
+       SLAPD_DOMAIN: gotechnies.com
+
+   phpldapadmin:
+     depends_on:
+       - openldap
+     image: dinkel/phpldapadmin
+     ports:
+       - "80:80"
+     restart: always
+volumes:
+    db_data: {}
